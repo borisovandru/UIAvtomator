@@ -15,6 +15,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import com.borisov.uiavtomator.R
+import com.borisov.uiavtomator.TestConstants
 import com.borisov.uiavtomator.view.details.DetailsActivity
 
 @RunWith(AndroidJUnit4::class)
@@ -49,7 +50,7 @@ class DetailsActivityEspressoTest {
 
     @Test
     fun activityTextView_HasText() {
-        val assertion = ViewAssertions.matches(ViewMatchers.withText("Number of results: 0"))
+        val assertion = ViewAssertions.matches(ViewMatchers.withText(TestConstants.RESULT_EMPTY))
         Espresso.onView(withId(R.id.totalCountTextView)).check(assertion)
     }
 
@@ -68,23 +69,47 @@ class DetailsActivityEspressoTest {
     @Test
     fun activityButtons_AreEffectiveVisible() {
         Espresso.onView(withId(R.id.incrementButton))
-            .check(ViewAssertions.matches(ViewMatchers.withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)))
+            .check(
+                ViewAssertions
+                    .matches(
+                        ViewMatchers
+                            .withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)
+                    )
+            )
         Espresso.onView(withId(R.id.decrementButton))
-            .check(ViewAssertions.matches(ViewMatchers.withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)))
+            .check(
+                ViewAssertions
+                    .matches(
+                        ViewMatchers
+                            .withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)
+                    )
+            )
     }
 
     @Test
     fun activityButtonIncrement_IsWorking() {
         Espresso.onView(withId(R.id.incrementButton)).perform(ViewActions.click())
         Espresso.onView(withId(R.id.totalCountTextView))
-            .check(ViewAssertions.matches(ViewMatchers.withText("Number of results: 1")))
+            .check(
+                ViewAssertions
+                    .matches(
+                        ViewMatchers
+                            .withText(TestConstants.FIND_RESULT_INCREMENT)
+                    )
+            )
     }
 
     @Test
     fun activityButtonDecrement_IsWorking() {
         Espresso.onView(withId(R.id.decrementButton)).perform(ViewActions.click())
         Espresso.onView(withId(R.id.totalCountTextView))
-            .check(ViewAssertions.matches(ViewMatchers.withText("Number of results: -1")))
+            .check(
+                ViewAssertions
+                    .matches(
+                        ViewMatchers
+                            .withText(TestConstants.FIND_RESULT_DECREMENT)
+                    )
+            )
     }
 
     @After
